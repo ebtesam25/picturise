@@ -36,32 +36,15 @@ class Csummer extends Component {
     
         reader.readAsDataURL(file)
       }
-
-      _handleFSubmit(e) {
-        e.preventDefault();
-        // TODO: do something with -> this.state.file
-        console.log('handle uploading-', this.state.file);
-      }
-    
-      _handleFolderChange(e) {
-        e.preventDefault();
-    
-        let reader = new FileReader();
-        let file = e.target.files[0];
-    
-        reader.onloadend = () => {
-          this.setState({
-            folder: file,
-          });
-        }
-    
-        reader.readAsDataURL(file)
-      }
     
     render() {
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
-   
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} height='400vh' />);
+    } else {
+      $imagePreview = (<div className="previewText"></div>);
+    }
         return (
          <div>
             <div>
@@ -72,7 +55,8 @@ class Csummer extends Component {
                 Step 1:<span style={{fontFamily:'Poppins'}}> Upload an image from a summer you’d like to go back to</span>
                 {this.state.imageLoaded== null  &&
                <div><img src={UploadImg} alt="home" height="300vh" style={{marginTop:'15%'}}></img></div> }
-                <div style={{marginTop:'5%'}}>{$imagePreview}</div>
+               {this.state.imageLoaded &&
+                <div style={{marginTop:'5%'}}>{$imagePreview}</div>}
                 <div style={{ marginTop:"10%"}}>
                 <form onSubmit={(e)=>this._handleSubmit(e)}>
              <input className="fileInput" 
@@ -93,7 +77,7 @@ class Csummer extends Component {
               </div>
               
             </div>
-            <Link to="p"><button  style={{backgroundColor:"#4A73B1", height:"7.5vh", width: "25vh", marginLeft:"5%", border:"none", borderRadius:20, color:'white', fontFamily:'Roboto', fontSize:'2.5vh'}}>Recreate</button></Link>
+            <Link to="p"><button  style={{backgroundColor:"#4A73B1", height:"7.5vh", width: "25vh", marginLeft:"-9%", marginTop:'42.5%', border:"none", borderRadius:20, color:'white', fontFamily:'Roboto', fontSize:'2.5vh'}}>Recreate</button></Link>
          </div>   
         );
     }
